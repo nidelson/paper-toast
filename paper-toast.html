@@ -150,7 +150,8 @@ Custom property | Description | Default
           noCancelOnOutsideClick: {
             type: Boolean,
             value: true
-          },
+          }
+
         },
 
         /**
@@ -188,6 +189,20 @@ Custom property | Description | Default
          */
         hide: function() {
           this.close();
+        },
+
+        /**
+         * Overridden from `IronFitBehavior`.
+         * Positions the toast at the bottom left of fitInto.
+         */
+        center: function () {
+          if (this.fitInto === window) {
+            this.style.bottom = this.style.left = '';
+          } else {
+            var rect = this.fitInto.getBoundingClientRect();
+            this.style.left = rect.left + 'px';
+            this.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+          }
         },
 
         /**

@@ -37,6 +37,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="contained">
+    <template>
+      <div style="position:fixed; bottom: 50px; left: 50px; height: 50px"></div>
+      <paper-toast opened></paper-toast>
+    </template>
+  </test-fixture>
+
   <script>
     suite('basic', function() {
 
@@ -129,6 +136,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             done();
           }, 10);
         }, 5);
+      });
+
+      test('toast is positioned according to its fitInto', function() {
+        var f = fixture('contained');
+        var container = f[0];
+        var toast = f[1];
+        toast.fitInto = container;
+        toast.center();
+        var rect = container.getBoundingClientRect();
+        assert.equal(toast.style.left, rect.left + 'px');
+        assert.equal(toast.style.bottom, (window.innerHeight - rect.bottom) + 'px');
       });
 
       suite('a11y', function() {
